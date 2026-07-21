@@ -26,3 +26,7 @@ $ docker push docker.io/intheeast0305/ch2_agent:latest
 ### 참고: Git 설정으로 방지하기
 
 `git config core.autocrlf false` (또는 `input`)로 설정해두면 Git이 커밋/체크아웃 시 개행 문자를 임의로 변환하지 않아, 편집기 설정 실수로 인한 CRLF 유입을 줄일 수 있습니다.
+
+## 사용된 리눅스 커맨드 설명
+
+`Dockerfile`과 `watcher.sh`에 등장하는 모든 리눅스 커맨드에 대한 설명은 [COMMANDS.md](./COMMANDS.md)를 참고하세요.
