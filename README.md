@@ -32,3 +32,5 @@ $ docker push docker.io/intheeast0305/ch2_agent:latest
 `Dockerfile`과 `watcher.sh`에 등장하는 모든 리눅스 커맨드에 대한 설명은 [COMMANDS.md](./COMMANDS.md)를 참고하세요.
 
 `nc`(netcat) 커맨드에 대한 상세 설명과 사용법은 [NC.md](./NC.md)를 참고하세요.
+
+`timeout` 커맨드에 대한 상세 설명과 사용법은 [TIMEOUT.md](./TIMEOUT.md)를 참고하세요.
