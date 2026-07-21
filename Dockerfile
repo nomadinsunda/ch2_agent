@@ -1,8 +1,10 @@
-FROM busybox
-COPY . /watcher
+FROM busybox:1.36
+
+RUN adduser -DHs /bin/sh example
+
+COPY watcher.sh /watcher/watcher.sh
 WORKDIR /watcher
 
-RUN adduser -DHs /bin/bash example
 RUN chown example watcher.sh
 RUN chmod a+x watcher.sh
 USER example
