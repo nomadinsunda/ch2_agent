@@ -7,7 +7,8 @@ do
     then
         echo "System up."
     else
-        printf "To: admin@work Message: The service is down!" | nc insidemailer 33333
+        # mailer nc도 timeout으로 감싸 무한 대기 방지 (웹 체크와 동일)
+        printf "To: admin@work Message: The service is down!" | timeout 2 nc insidemailer 33333
         echo "Alert sent."
     fi
 
