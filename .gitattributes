@@ -1,0 +1,3 @@
+# Shell scripts run inside a Linux container — always check out with LF,
+# otherwise CRLF breaks the shebang and command execution.
+*.sh text eol=lf
