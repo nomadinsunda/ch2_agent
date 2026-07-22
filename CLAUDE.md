@@ -18,6 +18,6 @@ There is no test suite or linter configured in this repo.
 ## Architecture
 
 - `Dockerfile` — builds from `busybox`, copies the repo into `/watcher`, creates a non-root user `example`, and runs `watcher.sh` as the container entrypoint.
-- `watcher.sh` — the entire runtime logic. In a loop, it sends a raw HTTP GET to `$INSIDEWEB_PORT_80_TCP_ADDR:$INSIDEWEB_PORT_80_TCP_PORT` via `nc` and checks the response for `200 OK`. On success it logs and loops (sleeping 1s between checks). On failure it sends a plaintext alert to `$INSIDEMAILER_PORT_33333_TCP_ADDR:$INSIDEMAILER_PORT_33333_TCP_PORT` via `nc` and exits the loop (container ends).
-- Environment variables `INSIDEWEB_PORT_80_TCP_ADDR`/`_PORT` and `INSIDEMAILER_PORT_33333_TCP_ADDR`/`_PORT` are expected to be injected by the container orchestration (classic Docker `--link` style linked-container env vars), not set explicitly in this repo.
-- No web/mailer service code lives in this repo — this container only assumes those two linked services exist at runtime.
+- `watcher.sh` — the entire runtime logic. In an infinite loop, it sends a raw HTTP GET to the `insideweb` host on port 80 via `nc` (wrapped in `timeout 2` to avoid hanging on a stalled connection) and checks the response for `200 OK`. On success it logs `System up.`. On failure it sends a plaintext alert to the `insidemailer` host on port 33333 via `nc` (also wrapped in `timeout 2`) and logs `Alert sent.`. Either way it sleeps 1s and loops again — it does **not** exit on failure, so the container keeps re-checking and re-alerting every second until the service recovers.
+- The hostnames `insideweb` and `insidemailer` are expected to be resolvable at runtime (e.g. `--link` aliases or container names on a shared user-defined Docker network), not set explicitly in this repo.
+- No web/mailer service code lives in this repo — this container only assumes those two services are reachable by those hostnames at runtime.
